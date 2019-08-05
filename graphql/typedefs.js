@@ -1,5 +1,4 @@
 let typeDefs = `
-
 type ActivityType
 {
     tweakid: String
