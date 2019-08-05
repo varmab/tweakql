@@ -7,7 +7,7 @@ const cors = require('cors');
 const typeDefs=require('./graphql/typedefs')
 const resolvers=require('./graphql/resolvers')
 
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3003;
 const app = express();
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
