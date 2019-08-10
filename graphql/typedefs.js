@@ -103,6 +103,7 @@ type TemplateMessagesType
 
 type TweakType
 {
+    _id:ID!
     userid:String
     title:String
     description:String
