@@ -1,4 +1,28 @@
 let typeDefs = `
+
+input getTweaksInput{
+    userid:String
+    categoryType:String
+    start:Int
+    categoryid:String 
+}
+input getAllTweaksByCategoryInput
+{
+    start:Int
+    categoryid:String
+}
+input getTweaksforWebsiteInput
+{
+    start:Int
+}
+input searchUserAdminNotificationInput
+{
+    searchString:String
+}
+input getSelectedUsersAdminInput
+{
+    users:[String]
+}
 type ActivityType
 {
     tweakid: String
@@ -329,11 +353,11 @@ type WebType
 type Query
 {
     allTweaks:[TweakType]
-    getAllTweaksByCategory:[TweakType]
-    getTweaks:[TweakType]
-    getTweaksforWebsite:[TweakType]
-    searchUserAdminNotification:[UserType]
-    getSelectedUsersAdmin:[UserType]
+    getAllTweaksByCategory(getAllTweaksByCategoryInput:getAllTweaksByCategoryInput):[TweakType]
+    getTweaks(getTweaksInput:getTweaksInput) : [TweakType]
+    getTweaksforWebsite(getTweaksforWebsiteInput:getTweaksforWebsiteInput):[TweakType]
+    searchUserAdminNotification(searchUserAdminNotificationInput:searchUserAdminNotificationInput):[UserType]
+    getSelectedUsersAdmin(getSelectedUsersAdminInput:getSelectedUsersAdminInput):[UserType]
     allUsers:[UserType]
     allActivities:[ActivityType]
     allAdminNotifications:[AdminNotificationType]
@@ -342,61 +366,60 @@ type Query
     allFeedBacks:[FeedBackType]
     allNotifications:[NotificationType]
 }
-
 type Mutation
 {
-    addTweak:TweakType
-    updateTweak:TweakType
-    removeTweak:TweakType
-    removeTweakAdmin:TweakType
-    updateTweakAdmin:TweakType
-    flagTweak:TweakType
-    share:TweakType
-    shareDetails:TweakType
-    suspendTweak:TweakType
-    makeActiveTweak:TweakType
-    moveCategory:CategoryType
-    updateShareUrls:TweakType
-    signUp:UserType
-    StafffUsersignUp:UserType
-    twitterLogin:UserType
-    facebookLogin:UserType
-    linkFacebook:UserType
-    linkTwitter:UserType
-    linkEmail:UserType
-    unlinkEmail:UserType
-    unlinkFacebook:UserType
-    unlinkTwitter:UserType
-    updateUser:UserType
-    updateStaffUser:UserType
-    changePassword:UserType
-    removeUser:UserType
-    removeStaffUser:UserType
-    updateUserAdmin:UserType
-    userFollowPopular:UserType
-    userLogout:UserType
-    updateWebCreateVisited:UserType
-    updateQuickbloxid:UserType
-    deleteUser:UserType
-    suspendUser:UserType
-    makeUserActive:UserType
-    addNotification:AdminNotificationType
-    editAdminNotification:AdminNotificationType
-    deleteAdminNotification:AdminNotificationType
-    addCategory:CategoryType
-    editCategory:CategoryType
-    deleteCategory:CategoryType
-    addClipper:ClipperType
-    addComment:CommentType
-    deleteComment:CommentType
-    addFeedBack:FeedBackType
-    addKey:KeyType
-    notifications:NotificationType
-    deleteNotification:NotificationType
-    addTemplateMessage:TemplateMessagesType
-    updateTemplateMessages:TemplateMessagesType
-    deleteTemplateMessages:TemplateMessagesType
-    addVideo:WebType
+ addTweak:TweakType
+ updateTweak:TweakType
+ removeTweak:TweakType
+ removeTweakAdmin:TweakType
+ updateTweakAdmin:TweakType
+ flagTweak:TweakType
+ share:TweakType
+ shareDetails:TweakType
+ suspendTweak:TweakType
+ makeActiveTweak:TweakType
+ moveCategory:CategoryType
+ updateShareUrls:TweakType
+ signUp:UserType
+ StafffUsersignUp:UserType
+ twitterLogin:UserType
+ facebookLogin:UserType
+ linkFacebook:UserType
+ linkTwitter:UserType
+ linkEmail:UserType
+ unlinkEmail:UserType
+ unlinkFacebook:UserType
+ unlinkTwitter:UserType
+ updateUser:UserType
+ updateStaffUser:UserType
+ changePassword:UserType
+ removeUser:UserType
+ removeStaffUser:UserType
+ updateUserAdmin:UserType
+ userFollowPopular:UserType
+ userLogout:UserType
+ updateWebCreateVisited:UserType
+ updateQuickbloxid:UserType
+ deleteUser:UserType
+ suspendUser:UserType
+ makeUserActive:UserType
+ addNotification:AdminNotificationType
+ editAdminNotification:AdminNotificationType
+ deleteAdminNotification:AdminNotificationType
+ addCategory:CategoryType
+ editCategory:CategoryType
+ deleteCategory:CategoryType
+ addClipper:ClipperType
+ addComment:CommentType
+ deleteComment:CommentType
+ addFeedBack:FeedBackType
+ addKey:KeyType
+ notifications:NotificationType
+ deleteNotification:NotificationType
+ addTemplateMessage:TemplateMessagesType
+ updateTemplateMessages:TemplateMessagesType
+ deleteTemplateMessages:TemplateMessagesType
+ addVideo:WebType
 }
 `;
 

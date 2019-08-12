@@ -1,5 +1,6 @@
 var gql = require("graphql");
 var db = require("../db");
+var _ = require("underscore");
 
 var {
   User,
@@ -92,7 +93,9 @@ const resolvers = {
         });
       });
     },
-    getAllTweaksByCategory: (root, { start, categoryid }) => {
+
+    getAllTweaksByCategory: (_, { getAllTweaksByCategoryInput }) => {
+      let { start, categoryid } = getAllTweaksByCategoryInput;
       return new Promise((resolve, reject) => {
         if (categoryid == null || categoryid == "") {
           reject("categoryid is required");
@@ -191,7 +194,8 @@ const resolvers = {
         }
       });
     },
-    getTweaks: (root, { userid, categoryType, start, categoryid }) => {
+    getTweaks: (_, { getTweaksInput }) => {
+      let { userid, categoryType, start } = getTweaksInput;
       return new Promise((resolve, reject) => {
         var limit = 25;
         if (categoryType == "New") {
@@ -487,6 +491,7 @@ const resolvers = {
             }
           });
         } else if (categoryType == "StaffPicks") {
+          console.log("error");
           Tweak.find({
             $and: [
               { staffpick: 1 },
@@ -504,7 +509,7 @@ const resolvers = {
               else {
                 var len = res.length;
 
-                _.each(res, function(data1) {
+                res.forEach(function(data1) {
                   User.findOne({ _id: data1.userid }).exec((err, result) => {
                     Comment.find({
                       $and: [{ tweakid: data1._id }, { userid: userid }]
@@ -1137,7 +1142,8 @@ const resolvers = {
         }
       });
     },
-    getTweaksforWebsite: (root, { start }) => {
+    getTweaksforWebsite: (_, { getTweaksforWebsiteInput }) => {
+      let start = getTweaksforWebsiteInput;
       return new Promise((resolve, reject) => {
         var limit = 10;
         Tweak.find({})
@@ -1197,7 +1203,9 @@ const resolvers = {
           });
       });
     },
-    searchUserAdminNotification: (root, { searchString }) => {
+
+    searchUserAdminNotification: (_, { searchUserAdminNotificationInput }) => {
+      let searchString = searchUserAdminNotificationInput;
       return new Promise((resolve, reject) => {
         User.find(
           { username: { $regex: "" + searchString, $options: "$i" } },
@@ -1209,7 +1217,8 @@ const resolvers = {
           });
       });
     },
-    getSelectedUsersAdmin: (root, { users }) => {
+    getSelectedUsersAdmin: (_, { getSelectedUsersAdminInput }) => {
+      let users = getSelectedUsersAdminInput;
       return new Promise((resolve, reject) => {
         User.find({ _id: { $in: users } }, { username: 1 })
           .sort({ username: 1 })
