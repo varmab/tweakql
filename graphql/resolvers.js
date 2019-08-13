@@ -5359,7 +5359,7 @@ const resolvers = {
         });
       });
     },
-    editAdminNotification: (_, { editAdminNofiticationInput }) => {
+    editAdminNotification: (_, { editAdminNotificationInput }) => {
       let {
         _id,
         users,

@@ -293,7 +293,7 @@ input addNotificationInput
         isDraft:String
         status:String
 }
-input editAdminNofiticationInput
+input editAdminNotificationInput
 {
         _id:String
         users:String
@@ -762,7 +762,7 @@ type Mutation
  suspendUser(suspendUserInput:suspendUserInput):[UserType]
  makeUserActive(makeUserActiveInput:makeUserActiveInput):[UserType]
  addNotification(addNotificationInput:addNotificationInput):[AdminNotificationType]
- editAdminNotification(editAdminNofiticationInput:editAdminNofiticationInput):[AdminNotificationType]
+ editAdminNotification(editAdminNotificationInput:editAdminNotificationInput):[AdminNotificationType]
  deleteAdminNotification(deleteAdminNotificationInput:deleteAdminNotificationInput):[AdminNotificationType]
  addCategory(addCategoryInput:addCategoryInput):[CategoryType]
  editCategory(editCategoryInput:editCategoryInput):[CategoryType]
