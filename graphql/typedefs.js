@@ -1,6 +1,7 @@
 let typeDefs = `
 
-input getTweaksInput{
+input getTweaksInput
+{
     userid:String
     categoryType:String
     start:Int
@@ -22,6 +23,363 @@ input searchUserAdminNotificationInput
 input getSelectedUsersAdminInput
 {
     users:[String]
+}
+input addTweakInput
+{
+        userid:String
+        title:String
+        description:String
+        category:String
+        image:String
+        videourl:String
+        starttime:String
+        endtime:String
+        status:String
+        publicScope:String
+        savePermission:String
+        nsfw:String
+        staffpick:String
+        usertag:String
+        tags:String
+        bannerText:String
+        bannerColor:String
+        bannerXposition:String
+        bannerYposition:String
+        tweakimage:String
+        tweakurl:String
+        shareTypes:String
+ }
+ 
+ input updateTweakInput 
+ {
+        _id:String
+        categoryType:String
+        title:String
+        description:String
+        category:String
+        image:String
+        videourl:String
+        starttime:String
+        endtime:String
+        status:String
+        publicScope:String
+        savePermission:String
+        nsfw:String
+        staffpick:String
+        help:String
+        usertag:String
+        tags:String
+        isbadtweak:String
+        userid:String
+        viewsCount:String
+        likes:String
+        bombed:String
+        value:String
+ }
+ input removeTweakInput
+ {
+     _id:String
+     tweakid:String
+ }
+ input removeTweakAdminInput 
+ {
+     tweakids:[String]
+ }
+ input updateTweakAdminInput 
+ {
+     _id:String
+     title:String
+     category:String
+     status:String
+     staffpick:String
+ }
+ input flagTweakInput
+ {
+     _id:String
+     userid:String
+     flaggedType:String
+ }
+ input shareInput
+ {
+     _id:String
+ }
+ input shareDetailsInput
+ {
+     _id:String
+     userid:String
+     shareType:String
+ }
+ input suspendTweakInput
+ {
+     tweakids:[String]
+ }
+ input makeActiveTweakInput
+{
+     tweakid:String
+}
+input moveCategoryInput
+{
+     _id:String
+     moveId:String
+ }
+input signUpInput
+{
+        name:String
+        username:String!
+        email:String!
+        password:String!
+        profilepic:String
+        gender:String
+        age:String
+        biodata:String
+        location:String
+        devicetoken:String
+        devicetype:String
+        version:String
+        appversion:String
+}
+input StafffUsersignUpInput
+{
+    name:String
+    username:String
+    email:String
+    password:String
+    role:String
+    isFirstLogin:String
+}
+input twitterLoginInput
+{
+        twitterid:String
+        username:String
+        profilepic:String
+        gender:String
+        dob:String
+        devicetoken:String
+        devicetype:String
+        version:String
+        appversion:String
+}
+input facebookLoginInput 
+{
+        facebookid:String
+        name:String
+        email:String
+        profilepic:String
+        gender:String
+        dob:String
+        devicetoken:String
+        devicetype:String
+        version:String
+        appversion:String
+}
+input linkFacebookInput
+{
+    _id:String
+    facebookid:String
+    name:String 
+    email:String 
+    profilepic:String 
+    gender:String 
+    dob:String
+}
+input linkTwitterInput
+{
+    _id:String
+    twitterid:String 
+    username:String 
+    profilepic:String 
+    gender:String 
+    dob:String
+}
+input linkEmailInput
+{
+    _id:String
+    username:String
+    password:String
+}
+input unlinkEmailInput
+{
+    _id:String
+}
+input unlinkTwitterInput
+{
+    _id:String
+}
+input unlinkFacebookInput
+{
+    _id:String
+}
+input updateUserInput
+{
+        _id:String
+        type:String
+        name:String
+        username:String
+        profilepic:String
+        gender:String
+        age:String
+        biodata:String
+        location:String
+        website:String
+        userid:String
+        value:String
+        searchstring:String
+        searchType:String
+        notification:String
+}
+input updateStaffUserInput
+{
+    _id:String
+    name:String
+    username:String
+    role:String
+    email:String
+}
+input changePasswordInput
+{
+    _id:String
+    password:String!
+}
+input removeUserInput
+{
+    _id:String
+}
+input removeStaffUserInput
+{
+    _id:String
+}
+input updateUserAdminInput
+{
+    _id:String
+    popular:String
+    status:String
+}
+input userFollowPopularInput
+{
+    _id:String
+}
+input userLogoutInput
+{
+    _id:String
+}
+input updateWebCreateVisitedInput
+{
+    _id:String
+}
+input updateQuickbloxidInput
+{
+    _id:String
+    quickbloxid:String
+}
+input deleteUserInput
+ {
+    userids:[String]
+}
+input suspendUserInput
+{
+    userids:[String]
+}
+input makeUserActiveInput
+{
+    userid:[String]
+}
+input addNotificationInput
+{
+        users:String
+        notificationText:String
+        notificationUserType:String
+        notificationType:String
+        scheduledTime:String
+        isDraft:String
+        status:String
+}
+input editAdminNofiticationInput
+{
+        _id:String
+        users:String
+        notificationText:String
+        notificationUserType:String
+        notificationType:String
+        scheduledTime:String
+        isDraft:String
+}
+input deleteAdminNotificationInput
+{
+    _id:String
+}
+input addCategoryInput
+{
+    _id:String
+    categoryname:String
+}
+input editCategoryInput
+{
+    _id:String
+    categoryname:String
+}
+input deleteCategoryInput
+{
+    _id:String
+}
+input addClipperInput 
+{
+    videoUrl:String
+    imageUrl:String
+}
+input addCommentInput
+{
+    _id:String
+    tweakid:String
+    commenttype:String
+    commentUrl:String
+    comment:String
+    userid:String   
+}
+input deleteCommentInput
+{
+    _id:String
+    userid:String
+}
+input addFeedBackInput
+{
+    userid:String
+    subject:String
+    message:String
+}
+input addKeyInput 
+{
+    key:String
+}
+input notificationInput
+{
+    _id:String
+}
+input deleteNotificationInput
+{
+    _id:String
+    notificationid:String
+}
+input addTemplateMessageInput
+{
+    title:String
+    templateText:String
+}
+input updateTemplateMessagesInput
+{
+    _id:String
+    title:String
+    templateText:String
+}
+input deleteTemplateMessagesInput
+{
+    _id:String  
+}
+input addVideoInput
+{
+    _id:String
+    title:String
+    videour:String
+    imageurl:String
 }
 type ActivityType
 {
@@ -368,58 +726,58 @@ type Query
 }
 type Mutation
 {
- addTweak:TweakType
- updateTweak:TweakType
- removeTweak:TweakType
- removeTweakAdmin:TweakType
- updateTweakAdmin:TweakType
- flagTweak:TweakType
- share:TweakType
- shareDetails:TweakType
- suspendTweak:TweakType
- makeActiveTweak:TweakType
- moveCategory:CategoryType
- updateShareUrls:TweakType
- signUp:UserType
- StafffUsersignUp:UserType
- twitterLogin:UserType
- facebookLogin:UserType
- linkFacebook:UserType
- linkTwitter:UserType
- linkEmail:UserType
- unlinkEmail:UserType
- unlinkFacebook:UserType
- unlinkTwitter:UserType
- updateUser:UserType
- updateStaffUser:UserType
- changePassword:UserType
- removeUser:UserType
- removeStaffUser:UserType
- updateUserAdmin:UserType
- userFollowPopular:UserType
- userLogout:UserType
- updateWebCreateVisited:UserType
- updateQuickbloxid:UserType
- deleteUser:UserType
- suspendUser:UserType
- makeUserActive:UserType
- addNotification:AdminNotificationType
- editAdminNotification:AdminNotificationType
- deleteAdminNotification:AdminNotificationType
- addCategory:CategoryType
- editCategory:CategoryType
- deleteCategory:CategoryType
- addClipper:ClipperType
- addComment:CommentType
- deleteComment:CommentType
- addFeedBack:FeedBackType
- addKey:KeyType
- notifications:NotificationType
- deleteNotification:NotificationType
- addTemplateMessage:TemplateMessagesType
- updateTemplateMessages:TemplateMessagesType
- deleteTemplateMessages:TemplateMessagesType
- addVideo:WebType
+ addTweak(addTweakInput:addTweakInput):[TweakType]
+ updateTweak(updateTweakInput:updateTweakInput):[TweakType]
+ removeTweak(removeTweakInput:removeTweakInput):[TweakType]
+ removeTweakAdmin(removeTweakAdminInput:removeTweakAdminInput):[TweakType]
+ updateTweakAdmin(updateTweakAdminInput:updateTweakAdminInput):[TweakType]
+ flagTweak(flagTweakInput:flagTweakInput):[TweakType]
+ share(shareInput:shareInput):[TweakType]
+ shareDetails(shareDetailsInput:shareDetailsInput):[TweakType]
+ suspendTweak(suspendTweakInput:suspendTweakInput):[TweakType]
+ makeActiveTweak(makeActiveTweakInput:makeActiveTweakInput):[TweakType]
+ moveCategory(moveCategoryInput:moveCategoryInput):[CategoryType]
+ updateShareUrls:[TweakType]
+ signUp(signUpInput:signUpInput):[UserType]
+ StafffUsersignUp(StafffUsersignUpInput:StafffUsersignUpInput):[UserType]
+ twitterLogin(twitterLoginInput:twitterLoginInput):[UserType]
+ facebookLogin(facebookLoginInput:facebookLoginInput):[UserType]
+ linkFacebook(linkFacebookInput:linkFacebookInput):[UserType]
+ linkTwitter(linkTwitterInput:linkTwitterInput):[UserType]
+ linkEmail(linkEmailInput:linkEmailInput):[UserType]
+ unlinkEmail(unlinkEmailInput:unlinkEmailInput):[UserType]
+ unlinkFacebook(unlinkFacebookInput:unlinkFacebookInput):[UserType]
+ unlinkTwitter(unlinkTwitterInput:unlinkTwitterInput):[UserType]
+ updateUser(updateUserInput:updateUserInput):[UserType]
+ updateStaffUser(updateStaffUserInput:updateStaffUserInput):[UserType]
+ changePassword(changePasswordInput:changePasswordInput):[UserType]
+ removeUser(removeUserInput:removeUserInput):[UserType]
+ removeStaffUser(removeStaffUserInput:removeStaffUserInput):[UserType]
+ updateUserAdmin(updateUserAdminInput:updateUserAdminInput):[UserType]
+ userFollowPopular(userFollowPopularInput:userFollowPopularInput):[UserType]
+ userLogout(userLogoutInput:userLogoutInput):[UserType]
+ updateWebCreateVisited(updateWebCreateVisitedInput:updateWebCreateVisitedInput):[UserType]
+ updateQuickbloxid(updateQuickbloxidInput:updateQuickbloxidInput):[UserType]
+ deleteUser(deleteUserInput:deleteUserInput):[UserType]
+ suspendUser(suspendUserInput:suspendUserInput):[UserType]
+ makeUserActive(makeUserActiveInput:makeUserActiveInput):[UserType]
+ addNotification(addNotificationInput:addNotificationInput):[AdminNotificationType]
+ editAdminNotification(editAdminNofiticationInput:editAdminNofiticationInput):[AdminNotificationType]
+ deleteAdminNotification(deleteAdminNotificationInput:deleteAdminNotificationInput):[AdminNotificationType]
+ addCategory(addCategoryInput:addCategoryInput):[CategoryType]
+ editCategory(editCategoryInput:editCategoryInput):[CategoryType]
+ deleteCategory(deleteCategoryInput:deleteCategoryInput):[CategoryType]
+ addClipper(addClipperInput:addClipperInput):[ClipperType]
+ addComment(addCommentInput:addCommentInput):[CommentType]
+ deleteComment(deleteCommentInput:deleteCommentInput):[CommentType]
+ addFeedBack(addFeedBackInput:addFeedBackInput):[FeedBackType]
+ addKey(addKeyInput:addKeyInput):[KeyType]
+ notifications(notificationInput:notificationInput):[NotificationType]
+ deleteNotification(deleteNotificationInput:deleteNotificationInput):[NotificationType]
+ addTemplateMessage(addTemplateMessageInput:addTemplateMessageInput):[TemplateMessagesType]
+ updateTemplateMessages(updateTemplateMessagesInput:updateTemplateMessagesInput):[TemplateMessagesType]
+ deleteTemplateMessages(deleteTemplateMessagesInput:deleteTemplateMessagesInput):[TemplateMessagesType]
+ addVideo(addVideoInput:addVideoInput):[WebType]
 }
 `;
 

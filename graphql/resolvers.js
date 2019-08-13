@@ -1231,9 +1231,8 @@ const resolvers = {
   // mutations
   Mutation: {
     // tweak resolvers
-    addTweak: (
-      root,
-      {
+    addTweak: (_, { addTweakInput }) => {
+      let {
         userid,
         title,
         description,
@@ -1256,8 +1255,7 @@ const resolvers = {
         tweakimage,
         tweakurl,
         shareTypes
-      }
-    ) => {
+      } = addTweakInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: userid }).exec((err, res) => {
           if (res == null) {
@@ -1434,10 +1432,8 @@ const resolvers = {
         });
       });
     },
-
-    updateTweak: (
-      root,
-      {
+    updateTweak: (_, { updateTweakInput }) => {
+      let {
         _id,
         categoryType,
         title,
@@ -1461,8 +1457,7 @@ const resolvers = {
         likes,
         bombed,
         value
-      }
-    ) => {
+      } = updateTweakInput;
       return new Promise((resolve, reject) => {
         Tweak.findOne({ _id: _id }).exec((err, res) => {
           if (res == null) reject("Tweak does not exist.");
@@ -2345,7 +2340,8 @@ const resolvers = {
         });
       });
     },
-    removeTweak: (obj, { _id, tweakid }) => {
+    removeTweak: (_, { removeTweakInput }) => {
+      let { _id, tweakid } = removeTweakInput;
       return new Promise((resolve, reject) => {
         Tweak.findOne({ _id: tweakid }, (err, res) => {
           if (err || res == null) {
@@ -2393,7 +2389,8 @@ const resolvers = {
         });
       });
     },
-    removeTweakAdmin: (obj, { tweakids }) => {
+    removeTweakAdmin: (_, { removeTweakAdminInput }) => {
+      let { tweakids } = removeTweakAdminInput;
       return new Promise((resolve, reject) => {
         if (tweakids.length == 0) {
           reject("No tweakids found.");
@@ -2430,7 +2427,8 @@ const resolvers = {
         }
       });
     },
-    updateTweakAdmin: (root, { _id, title, category, status, staffpick }) => {
+    updateTweakAdmin: (_, { updateTweakAdminInput }) => {
+      let { _id, title, category, status, staffpick } = updateTweakAdminInput;
       return new Promise((resolve, reject) => {
         var categoryData = [];
         if (category != null && category != "") {
@@ -2458,8 +2456,8 @@ const resolvers = {
         );
       });
     },
-    flagTweak: (root, { _id, userid, flaggedType }) => {
-      console.log("the data to send: " + _id + userid + flaggedType);
+    flagTweak: (_, { flagTweakInput }) => {
+      let { _id, userid, flaggedType } = flagTweakInput;
       return new Promise((resolve, reject) => {
         Tweak.findOne(
           { $and: [{ _id: _id }, { "flagged.user": { $in: [userid] } }] },
@@ -2572,7 +2570,8 @@ const resolvers = {
         );
       });
     },
-    share: (root, { _id }) => {
+    share: (_, { shareInput }) => {
+      let { _id } = shareInput;
       return new Promise((resolve, reject) => {
         Tweak.update(
           { _id: _id },
@@ -2585,7 +2584,8 @@ const resolvers = {
         );
       });
     },
-    shareDetails: (root, { _id, userid, shareType }) => {
+    shareDetails: (_, { shareDetailsInput }) => {
+      let { _id, userid, shareType } = shareDetailsInput;
       return new Promise((resolve, reject) => {
         Tweak.update(
           { _id: _id },
@@ -2609,7 +2609,8 @@ const resolvers = {
         );
       });
     },
-    suspendTweak: (root, { tweakids }) => {
+    suspendTweak: (_, { suspendTweakInput }) => {
+      let { tweakids } = suspendTweakInput;
       return new Promise((resolve, reject) => {
         console.log("tweakids are:" + JSON.stringify(tweakids));
         if (tweakids.length == 0) {
@@ -2631,14 +2632,16 @@ const resolvers = {
         }
       });
     },
-    makeActiveTweak: (root, { tweakid }) => {
+    makeActiveTweak: (_, { makeActiveTweakInput }) => {
+      let { tweakid } = makeActiveTweakInput;
       return new Promise((resolve, reject) => {
         Tweak.update({ _id: tweakid }, { $set: { status: 1 } }, (err, res) => {
           resolve({ message: "Tweak is Active now " });
         });
       });
     },
-    moveCategory: (root, { _id, moveId }) => {
+    moveCategory: (_, { moveCategoryInput }) => {
+      let { _id, moveId } = moveCategoryInput;
       return new Promise((resolve, reject) => {
         //db.getCollection('tweaks').update({'category.categoryid': ObjectId("565ef21b55b323d835391847")},{$set: {'category.$.categoryid': ObjectId("565ef23055b323d835391849")}},{multi: true})
         Tweak.update(
@@ -2670,7 +2673,7 @@ const resolvers = {
         );
       });
     },
-    updateShareUrls: (root, {}) => {
+    updateShareUrls: (_, {}) => {
       return new Promise((resolve, reject) => {
         Tweak.find({ shareurl: { $exists: false } }).exec((err, tweaks) => {
           if (!tweaks) {
@@ -2725,10 +2728,8 @@ const resolvers = {
         });
       });
     },
-
-    signUp: (
-      root,
-      {
+    signUp: (_, { signUpInput }) => {
+      let {
         name,
         username,
         email,
@@ -2742,8 +2743,7 @@ const resolvers = {
         devicetype,
         version,
         appversion
-      }
-    ) => {
+      } = signUpInput;
       return new Promise((resolve, reject) => {
         email = email.toLowerCase();
         var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -2751,7 +2751,9 @@ const resolvers = {
           reject("Enter valid email id");
         } else {
           User.findOne(
-            { username: { $regex: "^" + username + "$", $options: "$i" } },
+            {
+              username: { $regex: "^" + username + "$", $options: "$i" }
+            },
             (err, res) => {
               if (res != null) {
                 reject("Sorry, this username already exists");
@@ -2824,7 +2826,9 @@ const resolvers = {
                                   err
                                     ? reject(err)
                                     : resolve(
-                                        User.findOne({ _id: result._id })
+                                        User.findOne({
+                                          _id: result._id
+                                        })
                                       );
                                 }
                               );
@@ -2866,10 +2870,15 @@ const resolvers = {
         }
       });
     },
-    StafffUsersignUp: (
-      root,
-      { name, username, email, password, role, isFirstLogin }
-    ) => {
+    StafffUsersignUp: (_, { StafffUsersignUpInput }) => {
+      let {
+        name,
+        username,
+        email,
+        password,
+        role,
+        isFirstLogin
+      } = StafffUsersignUpInput;
       return new Promise((resolve, reject) => {
         email = email.toLowerCase();
         var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -3089,9 +3098,8 @@ const resolvers = {
         } //end else
       });
     },
-    twitterLogin: (
-      root,
-      {
+    twitterLogin: (_, { twitterLoginInput }) => {
+      let {
         twitterid,
         username,
         profilepic,
@@ -3101,8 +3109,7 @@ const resolvers = {
         devicetype,
         version,
         appversion
-      }
-    ) => {
+      } = twitterLoginInput;
       return new Promise((resolve, reject) => {
         if (twitterid == null || twitterid == "")
           reject("Twitter id is mandatory.");
@@ -3273,9 +3280,8 @@ const resolvers = {
         }
       });
     },
-    facebookLogin: (
-      root,
-      {
+    facebookLogin: (_, { facebookLoginInput }) => {
+      let {
         facebookid,
         name,
         email,
@@ -3286,8 +3292,7 @@ const resolvers = {
         devicetype,
         version,
         appversion
-      }
-    ) => {
+      } = facebookLoginInput;
       return new Promise((resolve, reject) => {
         if (facebookid == null || facebookid == "")
           reject("Facebook id is mandatory.");
@@ -3637,10 +3642,16 @@ const resolvers = {
         }
       });
     },
-    linkFacebook: (
-      root,
-      { _id, facebookid, name, email, profilepic, gender, dob }
-    ) => {
+    linkFacebook: (_, { linkFacebookInput }) => {
+      let {
+        _id,
+        facebookid,
+        name,
+        email,
+        profilepic,
+        gender,
+        dob
+      } = linkFacebookInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: _id }, (err, res) => {
           if (res == null) {
@@ -3752,10 +3763,15 @@ const resolvers = {
         });
       });
     },
-    linkTwitter: (
-      root,
-      { _id, twitterid, username, profilepic, gender, dob }
-    ) => {
+    linkTwitter: (_, { linkTwitterInput }) => {
+      let {
+        _id,
+        twitterid,
+        username,
+        profilepic,
+        gender,
+        dob
+      } = linkTwitterInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: _id }, (err, res) => {
           if (res == null) {
@@ -3867,7 +3883,8 @@ const resolvers = {
         });
       });
     },
-    linkEmail: (root, { _id, username, password }) => {
+    linkEmail: (_, { linkEmailInput }) => {
+      let { _id, username, password } = linkEmailInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: _id }, (err, res) => {
           if (res == null) {
@@ -3911,7 +3928,8 @@ const resolvers = {
         });
       });
     },
-    unlinkEmail: (root, { _id }) => {
+    unlinkEmail: (_, { unlinkEmailInput }) => {
+      let { _id } = unlinkEmailInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: _id }, (err, res) => {
           if (res == null) reject("User does not exist...");
@@ -3998,7 +4016,8 @@ const resolvers = {
         });
       });
     },
-    unlinkTwitter: (root, { _id }) => {
+    unlinkTwitter: (_, { unlinkTwitterInput }) => {
+      let { _id } = unlinkTwitterInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: _id }, (err, res) => {
           if (res == null) reject("User does not exist...");
@@ -4034,7 +4053,8 @@ const resolvers = {
         });
       });
     },
-    unlinkFacebook: (root, { _id }) => {
+    unlinkFacebook: (_, { unlinkFacebookInput }) => {
+      let { _id } = unlinkFacebookInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: _id }, (err, res) => {
           if (res == null) reject("User does not exist...");
@@ -4070,9 +4090,8 @@ const resolvers = {
         });
       });
     },
-    updateUser: (
-      root,
-      {
+    updateUser: (_, { updateUserInput }) => {
+      let {
         _id,
         type,
         name,
@@ -4088,8 +4107,7 @@ const resolvers = {
         searchstring,
         searchType,
         notification
-      }
-    ) => {
+      } = updateUserInput;
       return new Promise((resolve, reject) => {
         if (type == "Profile") {
           if (username == null || username == "")
@@ -4445,7 +4463,8 @@ const resolvers = {
         } else reject("Invalid type");
       });
     },
-    updateStaffUser: (root, { _id, name, username, role, email }) => {
+    updateStaffUser: (_, { updateStaffUserInput }) => {
+      let { _id, name, username, role, email } = updateStaffUserInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: _id }, (err, res) => {
           if (res == null) reject("User does not exist.");
@@ -4474,7 +4493,8 @@ const resolvers = {
         });
       });
     },
-    changePassword: (root, { _id, password }) => {
+    changePassword: (_, { changePasswordInput }) => {
+      let { _id, password } = changePasswordInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: _id }, (err, res) => {
           if (err) {
@@ -4497,7 +4517,8 @@ const resolvers = {
         });
       });
     },
-    removeUser: (obj, { _id }) => {
+    removeUser: (_, { removeUserInput }) => {
+      let { _id } = removeUserInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: _id }, (err, user) => {
           if (err || user == null) {
@@ -4636,7 +4657,8 @@ const resolvers = {
         });
       });
     },
-    removeStaffUser: (obj, { _id }) => {
+    removeStaffUser: (_, { removeStaffUserInput }) => {
+      let { _id } = removeStaffUserInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: _id }, (err, res) => {
           if (err || res == null) {
@@ -4653,7 +4675,8 @@ const resolvers = {
         });
       });
     },
-    updateUserAdmin: (root, { _id, popular, status }) => {
+    updateUserAdmin: (_, { updateUserAdminInput }) => {
+      let { _id, popular, status } = updateUserAdminInput;
       return new Promise((resolve, reject) => {
         console.log("popular: " + popular);
         User.update(
@@ -4668,7 +4691,8 @@ const resolvers = {
         );
       });
     },
-    userFollowPopular: (root, { _id }) => {
+    userFollowPopular: (_, { userFollowPopularInput }) => {
+      let { _id } = userFollowPopularInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: _id }).exec((err, user) => {
           if (err) reject(err);
@@ -4698,7 +4722,8 @@ const resolvers = {
         });
       });
     },
-    userLogout: (root, { _id }) => {
+    userLogout: (_, { userLogoutInput }) => {
+      let { _id } = userLogoutInput;
       return new Promise((resolve, reject) => {
         User.update({ _id: _id }, { $set: { devices: null } }, (err, user) => {
           user.message = "Logged out.";
@@ -4706,7 +4731,8 @@ const resolvers = {
         });
       });
     },
-    updateWebCreateVisited: (root, { _id }) => {
+    updateWebCreateVisited: (_, { updateWebCreateVisitedInput }) => {
+      let { _id } = updateWebCreateVisitedInput;
       return new Promise((resolve, reject) => {
         User.update(
           { _id: _id },
@@ -4718,7 +4744,8 @@ const resolvers = {
         );
       });
     },
-    updateQuickbloxid: (root, { _id, quickbloxid }) => {
+    updateQuickbloxid: (_, { updateQuickbloxidInput }) => {
+      let { _id, quickbloxid } = updateQuickbloxidInput;
       return new Promise((resolve, reject) => {
         User.update(
           { _id: _id },
@@ -4730,7 +4757,8 @@ const resolvers = {
         );
       });
     },
-    deleteUser: (root, { userids }) => {
+    deleteUser: (_, { deleteUserInput }) => {
+      let { userids } = deleteUserInput;
       return new Promise((resolve, reject) => {
         if (userids.length == 0) {
           reject("No ids.");
@@ -5106,7 +5134,8 @@ const resolvers = {
         }
       });
     },
-    suspendUser: (root, { userids }) => {
+    suspendUser: (_, { suspendUserInput }) => {
+      let { userids } = suspendUserInput;
       return new Promise((resolve, reject) => {
         console.log("userids are:" + JSON.stringify(userids));
         if (userids.length == 0) {
@@ -5128,18 +5157,16 @@ const resolvers = {
         }
       });
     },
-    makeUserActive: (root, { userid }) => {
+    makeUserActive: (_, { makeUserActiveInput }) => {
+      let userid = makeUserActiveInput;
       return new Promise((resolve, reject) => {
         User.update({ _id: userid }, { $set: { status: 1 } }, (err, res) => {
           resolve({ message: "User is Active now " });
         });
       });
     },
-
-    // Admin notifications resolvers
-    addNotification: (
-      root,
-      {
+    addNotification: (_, { addNotificationInput }) => {
+      let {
         users,
         notificationText,
         notificationUserType,
@@ -5147,8 +5174,7 @@ const resolvers = {
         scheduledTime,
         isDraft,
         status
-      }
-    ) => {
+      } = addNotificationInput;
       return new Promise((resolve, reject) => {
         var newAdminNotification = new AdminNotification({
           users: users,
@@ -5333,9 +5359,8 @@ const resolvers = {
         });
       });
     },
-    editAdminNotification: (
-      root,
-      {
+    editAdminNotification: (_, { editAdminNofiticationInput }) => {
+      let {
         _id,
         users,
         notificationText,
@@ -5343,8 +5368,7 @@ const resolvers = {
         notificationType,
         scheduledTime,
         isDraft
-      }
-    ) => {
+      } = editAdminNotificationInput;
       return new Promise((resolve, reject) => {
         AdminNotification.update(
           { _id: _id },
@@ -5367,7 +5391,8 @@ const resolvers = {
         );
       });
     },
-    deleteAdminNotification: (root, { _id }) => {
+    deleteAdminNotification: (_, { deleteAdminNotificationInput }) => {
+      let { _id } = deleteAdminNotificationInput;
       return new Promise((resolve, reject) => {
         AdminNotification.findOne({ _id: _id }).exec((err, res) => {
           if (res == null) reject("Notification did not found");
@@ -5379,8 +5404,8 @@ const resolvers = {
         });
       });
     },
-    // category resolvers
-    addCategory: (root, { _id, categoryname }) => {
+    addCategory: (_, { addCategoryInput }) => {
+      let { _id, categoryname } = addCategoryInput;
       return new Promise((resolve, reject) => {
         var newCategory = new Category({ categoryname: categoryname });
         newCategory.save((err, result) => {
@@ -5388,7 +5413,8 @@ const resolvers = {
         });
       });
     },
-    editCategory: (root, { _id, categoryname }) => {
+    editCategory: (_, { editCategoryInput }) => {
+      let { _id, categoryname } = editCategoryInput;
       return new Promise((resolve, reject) => {
         Category.update(
           { _id: _id },
@@ -5401,7 +5427,8 @@ const resolvers = {
         );
       });
     },
-    deleteCategory: (root, { _id }) => {
+    deleteCategory: (_, { deleteCategoryInput }) => {
+      let { _id } = deleteCategoryInput;
       return new Promise((resolve, reject) => {
         Category.remove({ _id: _id }, (err, result) => {
           Category.findOne({ _id: _id }, (err, category) => {
@@ -5410,8 +5437,8 @@ const resolvers = {
         });
       });
     },
-    //Clipper resolvers
-    addClipper: (root, { videoUrl, imageUrl }) => {
+    addClipper: (_, { addClipperInput }) => {
+      let { videoUrl, imageUrl } = addClipperInput;
       return new Promise((resolve, reject) => {
         var newClipper = new Clipper({
           videoUrl: videoUrl,
@@ -5422,11 +5449,15 @@ const resolvers = {
         });
       });
     },
-    // comment resolvers
-    addComment: (
-      root,
-      { _id, tweakid, commenttype, commentUrl, comment, userid }
-    ) => {
+    addComment: (_, { addCommentInput }) => {
+      let {
+        _id,
+        tweakid,
+        commenttype,
+        commentUrl,
+        comment,
+        userid
+      } = addCommentInput;
       return new Promise((resolve, reject) => {
         Tweak.findOne({ _id: tweakid }).exec((err, resl) => {
           if (resl == null) reject("Tweak does not exist.");
@@ -5519,7 +5550,8 @@ const resolvers = {
         });
       });
     },
-    deleteComment: (root, { _id, userid }) => {
+    deleteComment: (_, { deleteCommentInput }) => {
+      let { _id, userid } = deleteCommentInput;
       return new Promise((resolve, reject) => {
         Notification.remove({ commentid: _id }, (err, result) => {});
         Comment.findOne({ _id: _id }).exec((err, res) => {
@@ -5582,8 +5614,8 @@ const resolvers = {
         });
       });
     },
-    // FeedBack resolvers
-    addFeedBack: (root, { userid, subject, message }) => {
+    addFeedBack: (_, { addFeedBackInput }) => {
+      let { userid, subject, message } = addFeedBackInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: userid }, (err, user) => {
           //console.log("user found %#1: "+user.email+user.username)
@@ -5625,8 +5657,8 @@ const resolvers = {
         });
       });
     },
-    // Adding key resolvers
-    addKey: (root, { key }) => {
+    addKey: (_, { addKeyInput }) => {
+      let { key } = addKeyInput;
       return new Promise((resolve, reject) => {
         var newKey = new Key({ key: key });
         newKey.save((err, result) => {
@@ -5634,8 +5666,8 @@ const resolvers = {
         });
       });
     },
-    // Notification resolvers
-    notifications: (root, { _id }) => {
+    notifications: (_, { notificationInput }) => {
+      let { _id } = notificationInput;
       return new Promise((resolve, reject) => {
         Notification.update(
           { _id: _id },
@@ -5648,7 +5680,8 @@ const resolvers = {
         );
       });
     },
-    deleteNotification: (root, { _id, notificationid }) => {
+    deleteNotification: (_, { deleteNotificationInput }) => {
+      let { _id, notificationid } = deleteNotificationInput;
       return new Promise((resolve, reject) => {
         Notification.findOne({ _id: notificationid }).exec((err, res) => {
           if (res == null) reject("Notification did not found");
@@ -5665,8 +5698,8 @@ const resolvers = {
         });
       });
     },
-    // Template messages
-    addTemplateMessage: (root, { title, templateText }) => {
+    addTemplateMessage: (_, { addTemplateMessageInput }) => {
+      let { title, templateText } = addTemplateMessageInput;
       return new Promise((resolve, reject) => {
         var newTemplateMessage = new TemplateMessages({
           title: title,
@@ -5677,7 +5710,8 @@ const resolvers = {
         });
       });
     },
-    updateTemplateMessages: (root, { _id, title, templateText }) => {
+    updateTemplateMessages: (_, { updateTemplateMessagesInput }) => {
+      let { _id, title, templateText } = updateTemplateMessagesInput;
       return new Promise((resolve, reject) => {
         TemplateMessages.update(
           { _id: _id },
@@ -5691,7 +5725,8 @@ const resolvers = {
         );
       });
     },
-    deleteTemplateMessages: (root, { _id }) => {
+    deleteTemplateMessages: (_, { deleteTemplateMessagesInput }) => {
+      let { _id } = deleteTemplateMessagesInput;
       return new Promise((resolve, reject) => {
         TemplateMessages.findOne({ _id: _id }).exec((err, res) => {
           if (res == null) reject("Template did not found");
@@ -5703,8 +5738,8 @@ const resolvers = {
         });
       });
     },
-    // web resolvers
-    addVideo: (root, { _id, title, videourl, imageurl }) => {
+    addVideo: (_, { addVideoInput }) => {
+      let { _id, title, videourl, imageurl } = addVideoInput;
       return new Promise((resolve, reject) => {
         var newVideo = new Web({
           title: title,
