@@ -116,7 +116,7 @@ const resolvers = {
                       else {
                         var len = res.length;
 
-                        _.each(res, function(data1) {
+                        res.forEach(function(data1) {
                           User.findOne({ _id: data1.userid }).exec(
                             (err, result) => {
                               if (result != null) {
@@ -215,7 +215,7 @@ const resolvers = {
               else {
                 var len = res.length;
 
-                _.each(res, function(data1) {
+                res.forEach(function(data1) {
                   User.findOne({ _id: data1.userid }).exec((err, result) => {
                     Comment.find({
                       $and: [{ tweakid: data1._id }, { userid: userid }]
@@ -353,7 +353,7 @@ const resolvers = {
                   else {
                     var len = res.length;
 
-                    _.each(res, function(data1) {
+                    res.forEach(function(data1) {
                       User.findOne({ _id: data1.userid }).exec(
                         (err, result) => {
                           if (result) {
@@ -652,7 +652,7 @@ const resolvers = {
               else {
                 var len = res.length;
 
-                _.each(res, function(data1) {
+                res.forEach(function(data1) {
                   User.findOne({ _id: data1.userid }).exec((err, result) => {
                     Comment.find({
                       $and: [{ tweakid: data1._id }, { userid: userid }]
@@ -791,7 +791,7 @@ const resolvers = {
               else {
                 var len = res.length;
 
-                _.each(res, function(data1) {
+                res.forEach(function(data1) {
                   User.findOne({ _id: data1.userid }).exec((err, result) => {
                     Comment.find({
                       $and: [{ tweakid: data1._id }, { userid: userid }]
@@ -943,7 +943,7 @@ const resolvers = {
                         else {
                           var len = res.length;
 
-                          _.each(res, function(data1) {
+                          res.forEach(function(data1) {
                             User.findOne({ _id: data1.userid }).exec(
                               (err, result) => {
                                 if (result) {
@@ -1159,7 +1159,7 @@ const resolvers = {
                 else {
                   var len = res.length;
 
-                  _.each(res, function(data1) {
+                  res.forEach(function(data1) {
                     User.findOne({ _id: data1.userid }).exec((err, result) => {
                       data1.tweakCount = tweakCount;
                       if (result != null) {
@@ -4702,7 +4702,7 @@ const resolvers = {
             }).exec((err, res) => {
               if (err) reject(err);
               else {
-                _.each(res, function(data1) {
+                res.forEach(function(data1) {
                   User.update(
                     { _id: data1._id },
                     { $addToSet: { followers: _id } },
@@ -5615,7 +5615,7 @@ const resolvers = {
       });
     },
     addFeedBack: (_, { addFeedBackInput }) => {
-      let { userid, subject, message } = addFeedBackInput;
+      let { userid, username, email , subject, message, created } = addFeedBackInput;
       return new Promise((resolve, reject) => {
         User.findOne({ _id: userid }, (err, user) => {
           //console.log("user found %#1: "+user.email+user.username)
@@ -5699,7 +5699,7 @@ const resolvers = {
       });
     },
     addTemplateMessage: (_, { addTemplateMessageInput }) => {
-      let { title, templateText } = addTemplateMessageInput;
+      let { title, templateText,created } = addTemplateMessageInput;
       return new Promise((resolve, reject) => {
         var newTemplateMessage = new TemplateMessages({
           title: title,
@@ -5711,7 +5711,7 @@ const resolvers = {
       });
     },
     updateTemplateMessages: (_, { updateTemplateMessagesInput }) => {
-      let { _id, title, templateText } = updateTemplateMessagesInput;
+      let { _id, title, templateText, created } = updateTemplateMessagesInput;
       return new Promise((resolve, reject) => {
         TemplateMessages.update(
           { _id: _id },

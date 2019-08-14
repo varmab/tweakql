@@ -29,25 +29,25 @@ input addTweakInput
         userid:String
         title:String
         description:String
-        category:String
+        category:[String]
         image:String
         videourl:String
         starttime:String
         endtime:String
-        status:String
-        publicScope:String
-        savePermission:String
-        nsfw:String
-        staffpick:String
-        usertag:String
-        tags:String
+        status:Int
+        publicScope:Int
+        savePermission:Int
+        nsfw:Int
+        staffpick:Int
+        usertag:[String]
+        tags:[String]
         bannerText:String
         bannerColor:String
         bannerXposition:String
         bannerYposition:String
         tweakimage:String
         tweakurl:String
-        shareTypes:String
+        shareTypes:[String]
  }
  
  input updateTweakInput 
@@ -56,25 +56,25 @@ input addTweakInput
         categoryType:String
         title:String
         description:String
-        category:String
+        category:[String]
         image:String
         videourl:String
         starttime:String
         endtime:String
-        status:String
-        publicScope:String
-        savePermission:String
-        nsfw:String
-        staffpick:String
-        help:String
-        usertag:String
-        tags:String
-        isbadtweak:String
+        status:Int
+        publicScope:Int
+        savePermission:Int
+        nsfw:Int
+        staffpick:Int
+        help:Int
+        usertag:[String]
+        tags:[String]
+        isbadtweak:Int
         userid:String
-        viewsCount:String
-        likes:String
-        bombed:String
-        value:String
+        viewsCount:Int
+        likes:[String]
+        bombed:[String]
+        value:Int
  }
  input removeTweakInput
  {
@@ -89,9 +89,9 @@ input addTweakInput
  {
      _id:String
      title:String
-     category:String
-     status:String
-     staffpick:String
+     category:[String]
+     status:Int
+     staffpick:Int
  }
  input flagTweakInput
  {
@@ -119,8 +119,8 @@ input addTweakInput
 }
 input moveCategoryInput
 {
-     _id:String
-     moveId:String
+     _id:ID
+     moveId:ID
  }
 input signUpInput
 {
@@ -222,7 +222,7 @@ input updateUserInput
         location:String
         website:String
         userid:String
-        value:String
+        value:Int
         searchstring:String
         searchType:String
         notification:String
@@ -251,8 +251,8 @@ input removeStaffUserInput
 input updateUserAdminInput
 {
     _id:String
-    popular:String
-    status:String
+    popular:Int
+    status:Int
 }
 input userFollowPopularInput
 {
@@ -281,7 +281,7 @@ input suspendUserInput
 }
 input makeUserActiveInput
 {
-    userid:[String]
+    userid:String
 }
 input addNotificationInput
 {
@@ -314,12 +314,12 @@ input addCategoryInput
 }
 input editCategoryInput
 {
-    _id:String
+    _id:ID
     categoryname:String
 }
 input deleteCategoryInput
 {
-    _id:String
+    _id:ID
 }
 input addClipperInput 
 {
@@ -343,8 +343,11 @@ input deleteCommentInput
 input addFeedBackInput
 {
     userid:String
+    username:String
+    email:String
     subject:String
     message:String
+    created:String
 }
 input addKeyInput 
 {
@@ -363,12 +366,14 @@ input addTemplateMessageInput
 {
     title:String
     templateText:String
+    created:String
 }
 input updateTemplateMessagesInput
 {
     _id:String
     title:String
     templateText:String
+    created:String
 }
 input deleteTemplateMessagesInput
 {
@@ -386,8 +391,8 @@ type ActivityType
     tweakid: String
     userid:Int
     shareto: String
-    status:Int
-    created:String
+    status:Int!
+    created:String!
 }
 
 type AdminNotificationType
