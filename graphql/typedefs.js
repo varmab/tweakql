@@ -417,6 +417,7 @@ type NotificationUsersType
 
 type CategoryType
 {
+    _id:String
     categoryname:String
     count:Int
     categoryLikes:Int
@@ -784,6 +785,6 @@ type Mutation
  deleteTemplateMessages(deleteTemplateMessagesInput:deleteTemplateMessagesInput):TemplateMessagesType
  addVideo(addVideoInput:addVideoInput):WebType
 }
-`;
+`
 
-module.exports = typeDefs;
+module.exports = typeDefs
