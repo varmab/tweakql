@@ -93,6 +93,14 @@ input addTweakInput
      status:Int
      staffpick:Int
  }
+ input tweakLoginInput{
+        username:String
+        password:String
+        devicetoken:String
+        devicetype:String
+        version:String
+        appversion:String
+ }
  input flagTweakInput
  {
      _id:String
@@ -722,6 +730,7 @@ type Query
     getTweaksforWebsite(getTweaksforWebsiteInput:getTweaksforWebsiteInput):[TweakType]
     searchUserAdminNotification(searchUserAdminNotificationInput:searchUserAdminNotificationInput):[UserType]
     getSelectedUsersAdmin(getSelectedUsersAdminInput:getSelectedUsersAdminInput):[UserType]
+    tweakLogin(tweakLoginInput:tweakLoginInput):[UserType]
     allUsers:[UserType]
     allActivities:[ActivityType]
     allAdminNotifications:[AdminNotificationType]
@@ -737,6 +746,7 @@ type Mutation
  removeTweak(removeTweakInput:removeTweakInput):TweakType
  removeTweakAdmin(removeTweakAdminInput:removeTweakAdminInput):TweakType
  updateTweakAdmin(updateTweakAdminInput:updateTweakAdminInput):TweakType
+ 
  flagTweak(flagTweakInput:flagTweakInput):TweakType
  share(shareInput:shareInput):TweakType
  shareDetails(shareDetailsInput:shareDetailsInput):TweakType
