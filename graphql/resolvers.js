@@ -1240,19 +1240,11 @@ const resolvers = {
         User.findOne({
           $or: [{ email: username }, { username: username }]
         }).then(user => {
-          console.log(
-            "data",
-            username,
-            password,
-            devicetoken,
-            devicetype,
-            version,
-            appversion
-          )
-
+            console.log("user", user)
           if (user == undefined) {
             reject(new Error("Invalid username or password "))
           } else {
+            
             let devices = []
             var deviceObj = {}
             if (!user.devices) {
