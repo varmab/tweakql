@@ -1225,6 +1225,8 @@ const resolvers = {
       })
     },
     tweakLogin: (_, tweakLoginInput) => {
+      console.log('my data',tweakLoginInput)
+      tI = tweakLoginInput.tweakLoginInput
       let {
         username,
         password,
@@ -1232,11 +1234,22 @@ const resolvers = {
         devicetype,
         version,
         appversion
-      } = tweakLoginInput
+      } = tI
       return new Promise((resolve, reject) => {
+              
         User.findOne({
           $or: [{ email: username }, { username: username }]
         }).then(user => {
+          console.log(
+            "data",
+            username,
+            password,
+            devicetoken,
+            devicetype,
+            version,
+            appversion
+          )
+
           if (user == undefined) {
             reject(new Error("Invalid username or password "))
           } else {
