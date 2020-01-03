@@ -11,7 +11,7 @@ const app = express()
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 app.use(
-  "/graphql",
+  "/",
   cors(),
   graphqlHTTP({
     schema,
