@@ -26,6 +26,6 @@
     "netlify-lambda": "^1.6.3",
     "nodemon": "^2.0.2",
     "serverless-http": "^2.3.0",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   }
 }
